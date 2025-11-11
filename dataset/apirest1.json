@@ -1,0 +1,16 @@
+{
+	"name": "apirest1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "rstapi",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "?offset=[offset]"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

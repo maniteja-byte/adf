@@ -1,0 +1,81 @@
+{
+	"name": "upsertdeltalake",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "driver",
+						"type": "DatasetReference"
+					},
+					"name": "src"
+				}
+			],
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "datalakesorce",
+						"type": "LinkedServiceReference"
+					},
+					"name": "sinkdelta"
+				}
+			],
+			"transformations": [
+				{
+					"name": "upeerstate"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "alterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          location_id as short,",
+				"          city as string,",
+				"          state as string,",
+				"          country as string,",
+				"          latitude as double,",
+				"          longitude as double,",
+				"          last_updated_timestamp as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> src",
+				"src derive(state = upper(state)) ~> upeerstate",
+				"upeerstate select(mapColumn(",
+				"          location_id,",
+				"          city,",
+				"          state,",
+				"          country,",
+				"          last_updated_timestamp",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 alterRow(upsertIf(1==1)) ~> alterRow1",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'delta',",
+				"     fileSystem: 'destination',",
+				"     folderPath: 'data',",
+				"     mergeSchema: false,",
+				"     autoCompact: false,",
+				"     optimizedWrite: false,",
+				"     vacuum: 0,",
+				"     deletable: false,",
+				"     insertable: false,",
+				"     updateable: false,",
+				"     upsertable: true,",
+				"     keys:['location_id'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkdelta"
+			]
+		}
+	}
+}

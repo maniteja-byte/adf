@@ -60,7 +60,7 @@
 				"     validateSchema: false,",
 				"     format: 'delta',",
 				"     fileSystem: 'destination',",
-				"     folderPath: 'data',",
+				"     folderPath: 'deltasink',",
 				"     mergeSchema: false,",
 				"     autoCompact: false,",
 				"     optimizedWrite: false,",

@@ -1,10 +1,11 @@
 {
-	"name": "destinationfolder",
+	"name": "filestofolder",
 	"properties": {
 		"description": "moving files based on filename tp folder",
 		"activities": [
 			{
 				"name": "Get Metadata1",
+				"description": "files to folder based on the naming convention",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {

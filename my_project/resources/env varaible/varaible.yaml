@@ -1,0 +1,7 @@
+variables:
+  catalog:
+    default: assetbundles
+  schema:
+    default: information_schema
+  table:
+    default: columns

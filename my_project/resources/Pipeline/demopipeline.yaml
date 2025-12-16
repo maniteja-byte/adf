@@ -1,0 +1,15 @@
+resources:
+  pipelines:
+    pipeline_demo_elt:
+      name: demo-elt
+      libraries:
+        - glob:
+            include: ../../src/pipeline/demo-elt/transformations/**
+      schema: bronze
+      continuous: false
+      development: false
+      photon: true
+      channel: CURRENT
+      catalog: ${var.catalog}
+      serverless: true
+      root_path: .../../src/pipeline/demo-elt

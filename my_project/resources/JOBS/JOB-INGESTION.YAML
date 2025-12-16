@@ -1,0 +1,16 @@
+resources:
+  jobs:
+    ingestion_git:
+      name: ingestion-git
+      tasks:
+        - task_key: task1
+          notebook_task:
+            notebook_path: ../../src/Notebook/ingestion
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.information_schema}
+              table: ${var.columns}
+            source: WORKSPACE
+      queue:
+        enabled: true
+      performance_target: PERFORMANCE_OPTIMIZED
